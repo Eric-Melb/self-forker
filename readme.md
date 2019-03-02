@@ -4,25 +4,25 @@ Clicking this URL will fork this repo into your github.: https://github.com/logi
 
 ## Deployment 
 
-###Notes
+### Notes
 To aid deployment onto AWS Lambda a `lambda_package.zip` file is provided. As well as the two Python source files specific to this project (`lambda_function.py` and `github_io.py`) this archive contains the Python `requests` library and its dependencies. This packaging is necessary for running on the AWS Lambda platform.
 
-###Quick Deployment Overview
-#####AWS
+### Quick Deployment Overview
+##### AWS
 Create a Lambda with a default IAM role and upload lambda_package.zip
     
 Setup an API Gateway for a REST API with a single Lambda proxy resource, select the Lambda you just created, deploy the gateway
 
-#####Github
+##### Github
 Register an OAuth App from the developer menu, using your API gateway's invocation URL as the homepage and the same URL plus "/callback" as the callback.
 
 Go back to AWS and put the Client ID and Client Secret in the Lambda environment variables as `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` respectively. Change the `REPO_TO_FORK` variable in `lambda_function.py` if you want to a fork a different repo.
 
 The URL to activate (fork the repo) is `https://github.com/login/oauth/authorize?scope=public_repo&client_id=[]` where `[]` is your Client ID.  
 
-###Detailed Deployment Steps
+### Detailed Deployment Steps
 
-#####Configuring AWS
+##### Configuring AWS
 
 1. In AWS select the Amazon API Gateway product
 2. Click Get Started
@@ -53,7 +53,7 @@ The URL to activate (fork the repo) is `https://github.com/login/oauth/authorize
 27. Click the Deploy button
 28. The invoke URL (at the top of the page) will be needed for the github OAuth setup
 
-#####Configuring Github
+##### Configuring Github
 
 1. Register a new OAuth application via Settings -> Developer Settings -> New OAuth App
 2. For the Homepage URL, use the API Gateway Invocation URL
