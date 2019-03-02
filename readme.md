@@ -66,4 +66,4 @@ The URL to activate (fork the repo) is `https://github.com/login/oauth/authorize
 This program is a very small (sub 100 lines) self-forking repo. 
 It negotiates the Github API OAuth flow asking for `public_repo` access using the link provided by Github, then calls the API Gateway with the provided access code, triggering the Lambda. The Lambda validates that it was triggered with a code, then uses the requests library to exchange the code for a token, and then uses the token to fork the repo.  
 
-Print statements go the lambda's Cloudwatch logs, you can access these from the Lambda setup by clicking on Monitoring -> View Logs in Cloudwatch.
+Print statements go to the lambda's Cloudwatch logs, you can access these from the Lambda setup by clicking on Monitoring -> View Logs in Cloudwatch.
