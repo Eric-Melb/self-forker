@@ -47,7 +47,7 @@ The URL to activate (fork the repo) is `https://github.com/login/oauth/authorize
 21. Return to the API gateway interface for our API and select the proxy resource
 22. When selected it should say "Method not set up. Set up now." Click on "Set up now."
 23. Type in the name of the Lambda, I used "selfforker"
-24. In the add permisision dialogue, click "Ok"
+24. In the add permission dialogue, click "Ok"
 25. Click on Actions and select "Deploy API"
 26. Choose a Stage name (such as "live") and a Stage description (such as "live usage")
 27. Click the Deploy button
@@ -62,5 +62,8 @@ The URL to activate (fork the repo) is `https://github.com/login/oauth/authorize
 
 The URL to activate (fork the repo) is `https://github.com/login/oauth/authorize?scope=public_repo&client_id=[]` where `[]` is your Client ID.
 
-## Notes
-Print statements go the lambda's Cloudwatch logs, you can access these from the Lambda setup by clicking on Monitoring -> View Logs in Cloudwatch
+## Technical Notes
+This program is a very small (sub 100 lines) self-forking repo. 
+It negotiates the Github API OAuth flow asking for `public_repo` access using the link provided by Github, then calls the API Gateway with the provided access code, triggering the Lambda. The Lambda validates that it was triggered with a code, then uses the requests library to exchange the code for a token, and then uses the token to fork the repo.  
+
+Print statements go the lambda's Cloudwatch logs, you can access these from the Lambda setup by clicking on Monitoring -> View Logs in Cloudwatch.
