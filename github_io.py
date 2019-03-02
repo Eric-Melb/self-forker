@@ -32,7 +32,20 @@ def code_for_token(access_code):
         return token
 
 
-def clone_public_repo(token, repo):
-        head = {'Authorization:': 'token {}'.format(token)}
+# forks the specified repo into the token bearer's account
+# returns True/False for Success/Failure
+def fork_public_repo(token, repo):
+        head = {'Authorization': 'token {}'.format(token)}
+        url = REPOS_ENDPOINT + '/' + repo + '/' + 'forks'
 
-        pass
+        print("URL: {}".format(url))
+
+        response = requests.post(url, headers=head)
+
+        if response.status_code == 202:
+                return True
+        else:
+                # log failure
+                print("Error: {}".format(response.text))
+                return False
+

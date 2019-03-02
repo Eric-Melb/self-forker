@@ -1,6 +1,6 @@
 import github_io
 
-REPO_TO_CLONE = 'Eric-Melb/self-cloner'
+REPO_TO_FORK = 'Eric-Melb/self-forker'
 
 # lambda + api gateway valid response template
 api_response = {
@@ -17,7 +17,6 @@ def lambda_handler(event, context):
         # check this is a valid OAuth redirect
         try:
                 access_code = event['queryStringParameters']['code']
-                print('Code: {}'.format(access_code))
         except KeyError:
                 response = api_response
                 response['statusCode'] = 400
@@ -29,8 +28,17 @@ def lambda_handler(event, context):
         token = github_io.code_for_token(access_code)
 
         # use token to clone repo into users account
-        response = github_io.clone_public_repo(token, REPO_TO_CLONE)
+        success = github_io.fork_public_repo(token, REPO_TO_FORK)
 
-        return api_response
+        if success:
+                response = api_response
+                response['statusCode'] = 200
+                response['body'] = 'Repository successfully forked'
 
+                return response
+        else:
+                response = api_response
+                response['statusCode'] = 500
+                response['body'] = 'Unable to fork repository'
 
+                return response
