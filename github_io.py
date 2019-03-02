@@ -38,8 +38,6 @@ def fork_public_repo(token, repo):
         head = {'Authorization': 'token {}'.format(token)}
         url = REPOS_ENDPOINT + '/' + repo + '/' + 'forks'
 
-        print("URL: {}".format(url))
-
         response = requests.post(url, headers=head)
 
         if response.status_code == 202:
